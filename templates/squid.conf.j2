@@ -33,6 +33,13 @@ http_access deny all
 
 http_port {{ squid_http_port }}
 
+{% if squid_multiple_ips %}
+{% for address in squid_multiple_ips %}
+acl ip{{ loop.index }} myip {{ address }}
+tcp_outgoing_address {{ address }} ip{{ loop.index }}
+{% endfor %}
+{% endif %}
+
 {% if squid_tcp_outgoing_address %}
 tcp_outgoing_address {{ squid_tcp_outgoing_address }}
 {% endif %}
