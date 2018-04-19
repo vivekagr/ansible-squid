@@ -47,19 +47,14 @@
   tags:
     - squid
 
-- name: Create Squid MSNT auth configuration file
+- name: Create Squid basic auth users
   become: yes
-  template:
-    src: msntauth.conf.j2
-    dest: "{{ squid_config_dir }}/msntauth.conf"
-    owner: root
-    group: root
-    mode: 0644
-  when: ansible_distribution_release == "trusty"
-  notify:
-    - restart squid
-  tags:
-    - squid
+  htpasswd:
+    create: yes
+    name: "{{ squid_username }}"
+    password: "{{ squid_password }}"
+    path: "/etc/squid3/passwords"
+    state: present
 
 - name: Ensure Squid service is started and enabled on boot
   become: yes

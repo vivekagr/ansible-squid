@@ -13,6 +13,9 @@ acl Safe_ports port 591		# filemaker
 acl Safe_ports port 777		# multiling http
 acl CONNECT method CONNECT
 
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/passwords
+auth_param basic realm proxy
+
 {% if squid_acls %}
 {% for acl in squid_acls %}
 acl {{ acl.name }} {{ acl.type }} {{ acl.argument }}
