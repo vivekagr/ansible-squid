@@ -50,6 +50,34 @@ cache_peer {{ cache_peer.hostname }} {{ cache_peer.type }} {{ cache_peer.http_po
 {% endfor %}
 {% endif %}
 
+
+header_access From deny all
+header_access Server deny all
+header_access WWW-Authenticate deny all
+header_access Link deny all
+header_access Cache-Control deny all
+header_access Proxy-Connection deny all
+header_access X-Cache deny all
+header_access X-Cache-Lookup deny all
+header_access Via deny all
+header_access Forwarded-For deny all
+header_access X-Forwarded-For deny all
+header_access Pragma deny all
+header_access Keep-Alive deny all
+request_header_access From deny all
+request_header_access Server deny all
+request_header_access WWW-Authenticate deny all
+request_header_access Link deny all
+request_header_access Cache-Control deny all
+request_header_access Proxy-Connection deny all
+request_header_access X-Cache deny all
+request_header_access X-Cache-Lookup deny all
+request_header_access Via deny all
+request_header_access Forwarded-For deny all
+request_header_access X-Forwarded-For deny all
+request_header_access Pragma deny all
+request_header_access Keep-Alive deny all
+
 coredump_dir {{ squid_coredump_dir }}
 
 refresh_pattern ^ftp:		1440	20%	10080
