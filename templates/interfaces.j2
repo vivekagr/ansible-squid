@@ -1,0 +1,30 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto {{network_interface}}
+
+{% if squid_multiple_ips %}
+allow-hotplug {{network_interface}}
+
+iface {{network_interface}} inet static
+        address {{squid_multiple_ips[0]}}
+        netmask 255.255.255.0
+        dns-nameserver 8.8.8.8
+        dns-search vps.ovh.ca
+        gateway {{network_gateway}}
+
+{% for address in squid_multiple_ips[1:] %}
+iface {{network_interface}} inet static
+        address {{address}}
+        netmask 255.255.255.0
+        dns-nameserver 8.8.8.8
+        dns-search vps.ovh.ca
+
+{% endfor %}
+{% else %}
+iface {{network_interface}} inet dhcp
+{% endif %}
